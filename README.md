@@ -54,11 +54,11 @@
     columns – ‘index1’ for reducing the data in X_training and X_test
     files with the means and std as required in the assignment:
     
-    * index1 <- 
-* c(1,2,3,4,5,6,41,42,43,44,45,46,81,82,83,84,85,86,121,122,123,124,125,
-    126,161,162,163,164,165,166,201,202,214,215,227,228,240,241,253,254)
+    * index1 <-  c(1,2,3,4,5,6,41,42,43,44,45,46,81,82,83,84,85,86,121,
+                   122,123,124,125,126,161,162,163,164,165,166,201,202,
+                   214,215,227,228,240,241,253,254)
     
-    These numbers were derived from the ‘features.txt’ file where all of
+    The 40 numbers were derived from the ‘features.txt’ file where all of
     the features created from the pre-processed measurement raw data on 
     the various tri-axial and angular accelerations from the body Samsung 
     devices used in the experiment.
@@ -68,7 +68,8 @@
    
     * index2 <- c(1,2,3,7,8,9,13,14,15,19,20,21,25,26,27,31,33,35,37,39)
 
-    These index was derived from index1 as it is a subset of index1.
+    This 20 element index was derived from index1 as it is a subset of 
+    index1.
 
 6.  We now construct the variable names from the ‘features.txt’ file.  
     There are 561 names in the file so we created a transposed data frame
