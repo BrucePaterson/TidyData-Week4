@@ -29,7 +29,8 @@
       
     * library(plyr)
     * activitytrain <- 
-    * cbind(activitytrain,join(activitytrain,activity,"V1")) 
+      cbind(activitytrain,join(activitytrain,activity,"V1")) 
+
     * activitytest<- cbind(activitytest,join(activitytest,activity,"V1"))
     * actcomb <- rbind(activitytrain,activitytest)
 
@@ -86,25 +87,30 @@
     
 8.  Tidy data set Step 4. created
     * tidydat1 <- cbind(subact,variables)  
-    * “tidy data set 1 combining ‘subact’ and ‘variables’”
+    ‘tidy data set 1 combining ‘subact’ and ‘variables’
     
     * library(reshape2)  
-    * “need reshape2 package to melt tidydat1”
+    ‘need reshape2 package to melt tidydat1’
     
     * id <-1:length(tidydat1[,1])   
-    * “create a unique id for each row of tidydat1 (for melt)”
-    * tidydat1 <-cbind(id,tidydat1)        
-    * “add unique id column to front of tidydat1 before melt”
+    ‘create a unique id for each row of tidydat1 (for melt)’
 
-    * “Melt tidydat1 to put "variables" in rows of data from columns” 
-    * “currently using first 3 columns as ‘id.vars’”
-    *  tidydat1 <- melt(tidydat1,id.vars = c(1,2,3))
+    * tidydat1 <-cbind(id,tidydat1)        
+    ‘add unique id column to front of tidydat1 before melt’
+
+    Melt tidydat1 to put "variables" in rows of data from columns 
+    currently using first 3 columns as ‘id.vars’
+
+    * tidydat1 <- melt(tidydat1,id.vars = c(1,2,3))
     
-    * “Split data into tables/data.frames (40) where each has only one”
-    * “observation/value per row” (equivalent to separate tables for
-    *  each variable”
-    *   
-    *  tidydat1 <- split(tidydat1,tidydat1$variable)
+
+
+
+    Split data into tables/data.frames (40) where each has only one
+    observation/value per row (equivalent to separate tables for
+    each variable
+       
+    * tidydat1 <- split(tidydat1,tidydat1$variable)
 
 
 
@@ -117,7 +123,7 @@
     
     You can extract the data.frames from the list by using "ldply"
     function from "plyr" and then recombine them to create one data.frame
-    for analysis.  The code below does that as an example.
+    for analysis.  The code below does that as an example:
 
     * tiddtrecreate <- tidydat2[1:length(names(tidydat2))] 
     * library(dplyr)
