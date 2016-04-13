@@ -17,8 +17,8 @@
     activitytrain <- read.csv("y_train.txt",header=FALSE)
     activitytest <- read.csv("y_test.txt",header=FALSE)      
     features <- read.csv("features.txt",header=FALSE,sep = " ")
-    Vartrain <- read.table("X_train.txt",header=FALSE,sep = "")
-    Vartest <- read.table("X_test.txt",header=FALSE,sep = "")
+    vartrain <- read.table("X_train.txt",header=FALSE,sep = "")
+    vartest <- read.table("X_test.txt",header=FALSE,sep = "")
 
 ##  If you don't have plyr package installed you should use the next line of code and
 ##  install it - this code assume it is already installed on your machine.
@@ -36,32 +36,44 @@
     ##Create the combined Subject ids with the activity names and add their names
     subact <- cbind(subject,actcomb)
     subact <- subact[,c(1,4)]
-    names(subact) <- c("Subjectid","Activity")
-    
-    ##Index1 for reducing the X_data to cols required (index1)
-    index1 <- c(1,2,3,4,5,6,41,42,43,44,45,46,81,82,83,84,85,86,121,122,123,124,125,126,161,162,163,+
-                 164,165,166,201,202,214,215,227,228,240,241,253,254)
-    
-    ##Index2 for reducing the first tidy data file to the final tidy data file Step 5.
-    index2 <- c(1,2,3,7,8,9,13,14,15,19,20,21,25,26,27,31,33,35,37,39)
+    names(subact) <- c("subjectid","activity")
     
     ##Transpose the features variable to extract the second row of names for the variables we are extracting
     ##and use the Index1 to create the names header for both train and test X_data
     tf <- t(features)
     tf <- tf[2,]
+    
+    ##Create index1 using a regular expression where names start with 't' and have either 'mean' or 'std' in
+    ##name.
+    index1 <- grep("^t.*(mean|std)",tf,value = FALSE)
     headers <- tf[index1]  
     
-    ##Extract the X_data columns from the training and test data files (VArtrain and Vartest above)
-    Variables <- rbind(Vartrain, Vartest)
-    Variables <- Variables[index1]
-    names(Variables) <- headers
+    ##Extract the X_data columns from the training and test data files (vartrain and vartest above)
+    variables <- rbind(vartrain, vartest)
+    variables <- variables[index1]
+    names(variables) <- headers
     
     ##Tidy data set Step 4. created
-    tidydataset1 <- cbind(subact,Variables)
+    tidydat1 <- cbind(subact,variables)  ##tidy data set 1 combining subact and variables
+    library(reshape2)                    ##need reshape2 package to melt tidydat1
+    id <-1:length(tidydat1[,1])          ##create a unique id for each row of tidydat1 (for melt)
+    tidydat1 <-cbind(id,tidydat1)        ##add unique id column to front of tidydat1 before melt
+    ##Melt tidydat1 to put "variables" in rows of data from columns currently usig first 3 cols as 
+    ##id.vars
+    tidydat1 <- melt(tidydat1,id.vars = c(1,2,3))
+    ##Split data into tables/data.frames (40) where each has only one observation/value per row 
+    tidydat1 <- split(tidydat1,tidydat1$variable)
     
-    ##Create the final tidy data set for Step 5.
-    index2 <- c(c(1,2),index2+2)
-    tidydataset2 <- tidydataset1[index2]
+    ##Create the final tidy data set for Step 5 - by extracting names with "mean" in them from tidydat1
+    ##there are 20 data.frames extracted
     
-##  write.table (tidydataset2,file = "tidyout.txt",row.names = FALSE) 
+    tidydat2 <- tidydat1[grep("mean",names(tidydat1),value = FALSE)]
     
+    ##You can extract the data.frames from the list by using "ldply" function from "plyr" and then
+    ##recombine them to create one data.frame for analysis.
+    tiddtrecreate <- tidydat2[1:length(names(tidydat2))] 
+    library(dplyr)
+    tiddtrecreate <- ldply(tiddtrecreate, data.frame) %>% select(2:6)
+    
+    ##write.table (tidydat2,file = "tidyout.txt",row.names = FALSE) output the tidy data as per Step 5.
+    ##instructions as a text file.

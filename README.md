@@ -135,6 +135,11 @@
     * write.table (tidydat2,file = "tidyout.txt",row.names = FALSE)
 
     This line is commented out in the run_analysis.R script.  
+
+    The list class object created with the split command and reduced for
+    ‘mean’ values requested – ‘tidydat2’ is what is written as a text
+    file for upload.  You can use the ‘tiddtrecreate’ variable from
+    running script to check output. 
 	
 
  
