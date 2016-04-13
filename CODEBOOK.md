@@ -6,8 +6,8 @@ This codebook does the following:
 assignment. The process used to take the variables and put them in
 tidy data format.
 * The tidy data format resulting from the previous steps.
-*   A description of the resulting variables and format, and,
-*   Any assumptions made along the way regarding the data.
+*   a. A description of the resulting variables and format, and,
+*   b. Any assumptions made along the way regarding the data.
 
 ### 1. Input or Raw Data
 
