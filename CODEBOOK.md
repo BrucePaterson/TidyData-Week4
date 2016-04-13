@@ -1,10 +1,13 @@
 ### Introduction
+
 This codebook does the following:
-1. describes the input or raw data for this assignment.  
-2. The variables we used to create the tidy data set required for the assignment. The process used to take the variables and put them in tidy data format.
+1. Describes the input or raw data for this assignment.  
+2. The variables we used to create the tidy data set required for the
+   assignment. The process used to take the variables and put them in
+   tidy data format.
 3. The tidy data format resulting from the previous steps.
-a. A description of the resulting variables and format.
-b. Any assumptions made along the way regarding the data.
+   a. A description of the resulting variables and format, and,
+   b. Any assumptions made along the way regarding the data.
 
 ### 1. Input or Raw Data
 
@@ -39,9 +42,9 @@ called ‘actcomb’ where the training activity is placed on top of the
 test activity codes and names previously joined using “plyr” package. 
       
 * activitytrain <- 
-   cbind(activitytrain,join(activitytrain,activity,"V1")) 
-  * activitytest<- cbind(activitytest,join(activitytest,activity,"V1"))
-  * actcomb <- rbind(activitytrain,activitytest)
+  cbind(activitytrain,join(activitytrain,activity,"V1")) 
+* activitytest<- cbind(activitytest,join(activitytest,activity,"V1"))
+* actcomb <- rbind(activitytrain,activitytest)
 
    
 Now we combine the subject ID’s for training and test data into one 
@@ -73,7 +76,7 @@ for the variables we are extracting:
 * tf <- tf[2,]
 
 Create index1 using a regular expression where names start with 't' 
-and have either 'mean' or 'std' in their name.
+and have either 'mean' or 'std' in their name.  Only extracted the ‘time’ domain variables – beginning with ‘t’ (assuming frequency domain variables are not helpful without complete understanding of the FFT process). 
 
 * index1 <- grep("^t.*(mean|std)",tf,value = FALSE)
 * headers <- tf[index1]
@@ -124,13 +127,37 @@ function from "plyr" and then recombine them to create one data.frame
 for analysis.  The code below does that as an example:
 
 * tiddtrecreate <- tidydat2[1:length(names(tidydat2))] 
-* library(dplyr)
 * tiddtrecreate <- ldply(tiddtrecreate, data.frame) %>% select(2:6)
-    
     
 The list class object created with the split command and reduced for
 ‘mean’ values requested – ‘tidydat2’ is what is written as a text
 file for upload.  You can use the ‘tiddtrecreate’ variable from
 running script to check output.
  
+The output is: id subject activity variable value 
+For each of the 20 variables:
+1. tBodyAcc-mean()-X
+2. tBodyAcc-mean()-Y
+3. tBodyAcc-mean()-Z
+4. tGravityAcc-mean()-X
+5. tGravityAcc-mean()-Y
+6. tGravityAcc-mean()-Z
+7. tBodyAccJerk-mean()-X
+8. tBodyAccJerk-mean()-Y
+9. tBodyAccJerk-mean()-Z
+10. tBodyGyro-mean()-X
+11. tBodyGyro-mean()-Y
+12. tBodyGyro-mean()-Z
+13. tBodyGyroJerk-mean()-X
+14. tBodyGyroJerk-mean()-Y
+15. tBodyGyroJerk-mean()-Z
+16. tBodyAccMag-mean()
+17. tGravityAccMag-mean()
+18. tBodyAccJerkMag-mean()
+19. tBodyGyroMag-mean()
+20. tBodyGyroJerkMag-mean()
+
+
+
+We didn’t change the variable names as they seemed pretty descriptive for this exercise. 
 
