@@ -30,7 +30,6 @@
     * library(plyr)
     * activitytrain <- 
       cbind(activitytrain,join(activitytrain,activity,"V1")) 
-
     * activitytest<- cbind(activitytest,join(activitytest,activity,"V1"))
     * actcomb <- rbind(activitytrain,activitytest)
 
