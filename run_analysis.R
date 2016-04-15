@@ -43,8 +43,7 @@
     tf <- t(features)
     tf <- tf[2,]
     
-    ##Create index1 using a regular expression where names start with 't' and have either 'mean' or 'std' in
-    ##name.
+    ##Create index1 using a regular expression where names have either 'mean' or 'std' in name.
     index1 <- grep("mean|std",tf,value = FALSE)
     headers <- tf[index1]  
     
@@ -63,11 +62,11 @@
     ##id.vars
     tidydat1 <- melt(tidydat1,id.vars = c(1,2,3))
     
-    ##Split data into tables/data.frames (40) where each has only one observation/value per row 
+    ##Split data into tables/data.frames (79) where each has only one observation/value per row 
     tidydat1 <- split(tidydat1,tidydat1$variable)
     
     
-    ##Create the final tidy data set for Step 5: 
+    ##Create the tidy data set for Step 5 (output for project): 
     
     ##You can extract the data.frames from the list by using "ldply" function from "plyr" and then
     ##recombine them to create one data.frame for analysis.
@@ -75,6 +74,8 @@
     library(dplyr)
     tiddtrecreate <- ldply(tiddtrecreate, data.frame) %>% select(2:6)
     
+    ##This line creates the tidy data set step 5. requires with Averages by Subject by Activity by Variable
+    ##and an average value - one value per row (tidy).
     tidydat2 <- ddply(tiddtrecreate,c("subjectid","activity","variable"),summarise,mean = mean(value))
     
     write.table (tidydat2,file = "tidyout.txt",row.names = FALSE) ##output the tidy data as per Step 5.
