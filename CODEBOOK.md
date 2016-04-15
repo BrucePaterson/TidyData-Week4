@@ -1,13 +1,9 @@
 ### Introduction
 
 This codebook does the following:  
-* Describes the input or raw data for this assignment.  
-* The variables we used to create the tidy data set required for the
-assignment. The process used to take the variables and put them in
-tidy data format.
-* The tidy data format resulting from the previous steps.
-*   a. A description of the resulting variables and format, and,
-*   b. Any assumptions made along the way regarding the data.
+* Input or Raw data – described and used for this assignment.  
+* The Variables Used and Process (Tidy Data Set Creation) - the variables we used to create the tidy data set required for the assignment.  The process used to take the variables and put them in tidy data format.
+* Tidy Data Set Output for Assignment (Step 5) - the tidy data set created from Step 4 - averages by subject and activity and feature (variable) plus any assumptions made along the way regarding the data.
 
 ### 1. Input or Raw Data
 
