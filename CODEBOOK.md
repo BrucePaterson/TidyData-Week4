@@ -63,7 +63,7 @@ h. Split data into tables/data.frames (79) one for each selected feature where e
 You can extract the data.frames from the list object created above ini Step 4. by using "ldply" function from "plyr" and then recombine them to create one data.frame.  The tidy data set for Step 5. requires Averages by Subject by Activity by Variable (feature) - one average value per row (tidy) – “tidydat2” is the name of this tidy date set.
    
     
-The “tidydat2” variable is the written to the text file called “tidyout.txt” and uploaded as per instructions for the assignment.
+The “tidydat2” variable is the one written to the text file called “tidyout.txt” and uploaded as per instructions for the assignment.
     
 The output is: ‘subjectid’  ‘activity’  ‘variable’  ‘mean value’ 
 For each of the 79 ‘variables’:
