@@ -55,9 +55,9 @@
     There are 561 names in the file so we created a transposed data frame
     called ‘tf’ of the names and the column number from the raw data.
     The we extracted the names and we kept the variable names as already
-    provided – in our opinion using only the time variables provided that
-    the ‘t’ representing time were sufficiently descriptive of the values
-    contained.        
+    provided – in our opinion using the ‘t’ representing time and ‘f’ 
+    representing frequency (through Fast Fourier Transforms “FFT”) 
+    sufficiently describes the values contained.        
     
     Transpose the features variable to extract the second row of names 
     for the variables we are extracting:
@@ -65,10 +65,10 @@
     * tf <- t(features)
     * tf <- tf[2,]
 
-    Create index1 using a regular expression where names start with 't' 
-    and have either 'mean' or 'std' in their name.
+    Create index1 using a regular expression where names have either
+    'mean' or 'std' in their name.
 
-    * index1 <- grep("^t.*(mean|std)",tf,value = FALSE)
+    * index1 <- grep("mean|std",tf,value = FALSE)
     * headers <- tf[index1]
         
 6.  Extract the X_data columns from the training and test data files 
@@ -79,12 +79,7 @@
     * variables <- variables[index1]
     * names(variables) <- headers
     
-7.  Tidy data set Step 4. Created by column binding ‘subact’ variable and 
-    Variables variable:
-
-    * tidydataset1 <- cbind(subact,variables)
-    
-8.  Tidy data set Step 4. created
+7.  Tidy data set Step 4. Created:
     * tidydat1 <- cbind(subact,variables)  
     ‘tidy data set 1 combining ‘subact’ and ‘variables’
     
@@ -102,45 +97,33 @@
 
     * tidydat1 <- melt(tidydat1,id.vars = c(1,2,3))
     
-
-
-
-    Split data into tables/data.frames (40) where each has only one
+8.  Split data into tables/data.frames (79) where each has only one
     observation/value per row (equivalent to separate tables for
     each variable
        
     * tidydat1 <- split(tidydat1,tidydat1$variable)
 
-
-
-9.  Create the final tidy data set for Step 5 - by extracting names with
-    ‘mean’ in them from tidydat1 there are 20 data.frames extracted from 
-    list object created by split function above (from ‘mean’ in names of
-    the list – variable).  
-    
-    * tidydat2 <- tidydat1[grep("mean",names(tidydat1),value = FALSE)]
-    
+9.  Create the final tidy data set for Step 5:
+        
     You can extract the data.frames from the list by using "ldply"
     function from "plyr" and then recombine them to create one data.frame
-    for analysis.  The code below does that as an example:
+    for analysis.  
 
     * tiddtrecreate <- tidydat2[1:length(names(tidydat2))] 
     * library(dplyr)
     * tiddtrecreate <- ldply(tiddtrecreate, data.frame) %>% select(2:6)
     
-    
+    This line creates the tidy data set step 5. requires with Averages by
+    Subject by Activity by Variable and an average value - one value per 
+    row (tidy).
+
+    tidydat2 <-
+    ddply(tiddtrecreate,c("subjectid","activity","variable"),summarise,
+    mean = mean(value))
+
 10. The last step is to use ‘write.table’ to create the text file to 
     output the tidy data set requested for Step 5: 
 
     * write.table (tidydat2,file = "tidyout.txt",row.names = FALSE)
 
-    This line is commented out in the run_analysis.R script.  
-
-    The list class object created with the split command and reduced for
-    ‘mean’ values requested – ‘tidydat2’ is what is written as a text
-    file for upload.  You can use the ‘tiddtrecreate’ variable from
-    running script to check output. 
-	
-
- 
-
+    
